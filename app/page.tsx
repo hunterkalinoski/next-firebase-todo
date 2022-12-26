@@ -1,7 +1,8 @@
 "use client";
 
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from "./firebase";
+import { db } from "@lib/firebase";
+import HelloWorld from "@components/HelloWorld";
 
 export default function Home() {
   const createPost = async () => {
@@ -27,7 +28,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="bg-blue-200 text-cyan-700">Hello World</div>
+      <HelloWorld />
       <button onClick={createPost} className="border border-black rounded-sm">
         Create Post
       </button>
