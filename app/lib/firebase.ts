@@ -1,14 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
-import {
-  User,
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -23,48 +15,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-// Initialize Cloud Firestore and get a reference to the service
-export const db = getFirestore(app);
-
-export const auth = getAuth(app);
-
-export const createNewUser = async (email: string, password: string): Promise<User | undefined> => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    return user;
-  } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(`${errorCode} ${errorMessage}`);
-    return undefined;
-  }
-};
-
-export const logInUser = async (email: string, password: string): Promise<User | undefined> => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    return user;
-  } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(`${errorCode} ${errorMessage}`);
-    return undefined;
-  }
-};
-
-export const logOutUser = async (): Promise<boolean> => {
-  try {
-    signOut(auth);
-    return true;
-  } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(`${errorCode} ${errorMessage}`);
-    return false;
-  }
-};
+export default firebaseApp;

@@ -1,7 +1,8 @@
 "use client";
 
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db, createNewUser, logInUser, logOutUser } from "@lib/firebase";
+import { createNewUser, logInUser, logOutUser } from "@lib/auth";
+import db from "@lib/database";
 import HelloWorld from "@components/HelloWorld";
 import { useAuthState } from "@hooks/useAuthState";
 
@@ -9,13 +10,13 @@ export default function Home() {
   const [user] = useAuthState();
   const createPost = async () => {
     try {
-      // const docRef = await addDoc(collection(db, "users"), {
-      //   first: "Alan",
-      //   middle: "Mathison",
-      //   last: "Turing",
-      //   born: 1912,
-      // });
-      // console.log("Document written with ID: ", docRef.id);
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "John",
+        middle: "A",
+        last: "Smith",
+        born: 2000,
+      });
+      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -51,23 +52,17 @@ export default function Home() {
       <button onClick={logPosts} className="border border-black">
         Log Posts
       </button>
-      <p>{"current user: " + user?.displayName}</p>
+      <p>{"current user: " + user?.email}</p>
 
-      {!user && (
-        <div>
-          <button onClick={signUp} className="border border-black">
-            Sign Up
-          </button>
-          <button onClick={signIn} className="border border-black">
-            Sign In
-          </button>
-        </div>
-      )}
-      {user && (
-        <button onClick={signOut} className="border border-black">
-          Sign Out
-        </button>
-      )}
+      <button onClick={signUp} className="border border-black">
+        Sign Up
+      </button>
+      <button onClick={signIn} className="border border-black">
+        Sign In
+      </button>
+      <button onClick={signOut} className="border border-black">
+        Sign Out
+      </button>
     </main>
   );
 }
