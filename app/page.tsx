@@ -4,10 +4,11 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { createNewUser, logInUser, logOutUser } from "@lib/auth";
 import db from "@lib/database";
 import HelloWorld from "@components/HelloWorld";
-import { useAuthState } from "@hooks/useAuthState";
+import { useContext } from "react";
+import { UserContext } from "@lib/userContext";
 
 export default function Home() {
-  const [user] = useAuthState();
+  const user = useContext(UserContext);
   const createPost = async () => {
     try {
       const docRef = await addDoc(collection(db, "users"), {
@@ -45,6 +46,11 @@ export default function Home() {
 
   return (
     <main>
+      <HelloWorld />
+      <HelloWorld />
+      <HelloWorld />
+      <HelloWorld />
+      <HelloWorld />
       <HelloWorld />
       <button onClick={createPost} className="border border-black">
         Create Post
