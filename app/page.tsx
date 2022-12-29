@@ -1,8 +1,6 @@
 "use client";
 
-import { collection, addDoc, getDocs } from "firebase/firestore";
 import { createNewUser, logInUser, logOutUser } from "@lib/auth";
-import { db, createUserDocument, logUsersCollection } from "@lib/database";
 import HelloWorld from "@components/HelloWorld";
 import { useContext, useState } from "react";
 import { UserContext } from "@lib/userContext";
@@ -16,20 +14,15 @@ export default function Home() {
   // create both an auth user and a user database entry
   const signUp = async (display_name: string, email: string, password: string) => {
     console.log(`display_name: ${display_name}, email: ${email}, password: ${password}`);
-    const user = await createNewUser(email, password);
-    if (user) {
-      createUserDocument(display_name, email);
-    }
+    await createNewUser(display_name, email, password);
   };
 
   const signIn = async (email: string, password: string) => {
-    const user = await logInUser(email, password);
-    return user;
+    await logInUser(email, password);
   };
 
   const signOut = async () => {
-    const success = await logOutUser();
-    return success;
+    await logOutUser();
   };
 
   return (
@@ -62,9 +55,6 @@ export default function Home() {
         className="border border-black"
       />
 
-      <button onClick={logUsersCollection} className="border border-black">
-        Log Posts
-      </button>
       <p>{"current user: " + user?.email}</p>
 
       <button onClick={() => signUp(displayName, email, password)} className="border border-black">

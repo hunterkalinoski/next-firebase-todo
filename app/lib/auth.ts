@@ -1,4 +1,5 @@
 import firebaseApp from "@lib/firebase";
+import { createUserDocument } from "@lib/database";
 
 import {
   User,
@@ -16,7 +17,7 @@ export const auth: Auth = getAuth(firebaseApp);
 // takes in email and password strings
 // returns the user that was created, or undefined if an error occurrs
 // also displays an alert on errors
-export const createNewUser = async (email: string, password: string): Promise<User | undefined> => {
+const createUserAuth = async (email: string, password: string): Promise<User | undefined> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -27,6 +28,19 @@ export const createNewUser = async (email: string, password: string): Promise<Us
     alert(`${errorCode} ${errorMessage}`);
     return undefined;
   }
+};
+
+// create a new auth user account, as well as a user document in the database
+export const createNewUser = async (
+  display_name: string,
+  email: string,
+  password: string
+): Promise<boolean> => {
+  const user = await createUserAuth(email, password);
+  if (!user) {
+    return false;
+  }
+  return createUserDocument(display_name, email);
 };
 
 // function to log in to a users account
