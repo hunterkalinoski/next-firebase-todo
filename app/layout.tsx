@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthState } from "@hooks/useAuthState";
-import { UserContext } from "@lib/userContext";
+import { AuthUserContext } from "@lib/authUserContext";
 import "./globals.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       */}
       <head />
       <body>
-        <UserContext.Provider value={user}>{children}</UserContext.Provider>
+        <AuthUserContext.Provider value={user}>{children}</AuthUserContext.Provider>
       </body>
     </html>
   );

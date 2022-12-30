@@ -3,10 +3,10 @@
 import { createNewUser, logInUser, logOutUser } from "@lib/auth";
 import HelloWorld from "@components/HelloWorld";
 import { useContext, useState } from "react";
-import { UserContext } from "@lib/userContext";
+import { AuthUserContext } from "@lib/authUserContext";
 
 export default function Home() {
-  const user = useContext(UserContext);
+  const authUser = useContext(AuthUserContext);
   const [displayName, setDisplayName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -55,7 +55,7 @@ export default function Home() {
         className="border border-black"
       />
 
-      <p>{"current user: " + user?.email}</p>
+      <p>{"current user: " + authUser?.email}</p>
 
       <button onClick={() => signUp(displayName, email, password)} className="border border-black">
         Sign Up

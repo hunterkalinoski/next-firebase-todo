@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
 import firebaseApp from "@lib/firebase";
 
 // Initialize Cloud Firestore

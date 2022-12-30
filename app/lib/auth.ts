@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   Auth,
+  deleteUser,
 } from "firebase/auth";
 
 // initialize firebase auth
@@ -40,7 +41,14 @@ export const createNewUser = async (
   if (!user) {
     return false;
   }
-  return createUserDocument(user.uid, display_name, email);
+
+  const docCreated = createUserDocument(user.uid, display_name, email);
+  // if doc does not get created for any reason, delete the auth user
+  // if auth user exists, doc must also exist
+  if (!docCreated) {
+    deleteUser(user);
+  }
+  return true;
 };
 
 // function to log in to a users account

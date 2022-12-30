@@ -1,9 +1,9 @@
-import { UserContext } from "@lib/userContext";
+import { AuthUserContext } from "@lib/authUserContext";
 import { useContext } from "react";
 
 export default function HelloWorld() {
-  const user = useContext(UserContext);
+  const authUser = useContext(AuthUserContext);
   const text: String = "Hello world!";
 
-  return user && <div className="bg-teal-200 text-green-600">{text}</div>;
+  return authUser && <div className="bg-teal-200 text-green-600">{text}</div>;
 }
