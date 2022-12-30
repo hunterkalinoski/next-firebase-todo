@@ -3,13 +3,21 @@
 import { createNewUser, logInUser, logOutUser } from "@lib/auth";
 import HelloWorld from "@components/HelloWorld";
 import { getCurrentUserDoc } from "@lib/database";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthUserContext } from "@lib/authUserContext";
 
 export default function Home() {
+  const authUser = useContext(AuthUserContext);
   const [usersName, setUsersName] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  useEffect(() => {
+    getCurrentUserDoc().then((userDoc) => {
+      setUsersName(userDoc?.display_name);
+    });
+  }, [authUser]);
 
   // create both an auth user and a user database entry
   const signUp = async (display_name: string, email: string, password: string) => {
@@ -64,15 +72,6 @@ export default function Home() {
       </button>
       <button onClick={signOut} className="border border-black">
         Sign Out
-      </button>
-      <button
-        onClick={async () => {
-          const userDoc = await getCurrentUserDoc();
-          setUsersName(userDoc?.display_name);
-        }}
-        className="border border-black"
-      >
-        Get Current User&apos;s display name
       </button>
     </main>
   );
