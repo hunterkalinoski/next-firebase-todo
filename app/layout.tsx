@@ -1,12 +1,6 @@
-"use client";
-
-import { useAuthState } from "@hooks/useAuthState";
-import { AuthUserContext } from "@lib/authUserContext";
 import "./globals.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [user] = useAuthState();
-
   return (
     <html lang="en">
       {/*
@@ -14,9 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>
-        <AuthUserContext.Provider value={user}>{children}</AuthUserContext.Provider>
-      </body>
+      <body className="pt-5 flex flex-col gap-4 items-center text-center">{children}</body>
     </html>
   );
 }
