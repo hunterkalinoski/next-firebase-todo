@@ -40,7 +40,7 @@ export const createNewUser = async (
   if (!user) {
     return false;
   }
-  return createUserDocument(display_name, email);
+  return createUserDocument(user.uid, display_name, email);
 };
 
 // function to log in to a users account

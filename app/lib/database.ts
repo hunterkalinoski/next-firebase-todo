@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
 import firebaseApp from "@lib/firebase";
 
 // Initialize Cloud Firestore
@@ -7,13 +7,17 @@ export const db = getFirestore(firebaseApp);
 // create a new user document in the users collection
 // params display_name and email are strings to be associated with the user's database entry
 // returns true if successful, false if an error occurred
-export const createUserDocument = async (display_name: string, email: string): Promise<boolean> => {
+export const createUserDocument = async (
+  uid: string,
+  display_name: string,
+  email: string
+): Promise<boolean> => {
   try {
-    const docRef = await addDoc(collection(db, "users"), {
+    const docRef = await setDoc(doc(db, "users", uid), {
       display_name: display_name,
       email: email,
     });
-    console.log("Document written with ID: ", docRef.id);
+    console.log("Document written with ID: ", uid);
     return true;
   } catch (e) {
     console.error("Error adding document: ", e);
