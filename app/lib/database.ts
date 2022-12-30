@@ -1,5 +1,14 @@
-import { collection, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  setDoc,
+  doc,
+  getDoc,
+  DocumentData,
+} from "firebase/firestore";
 import firebaseApp from "@lib/firebase";
+import { auth } from "@lib/auth";
 
 // Initialize Cloud Firestore
 export const db = getFirestore(firebaseApp);
@@ -17,10 +26,8 @@ export const createUserDocument = async (
       display_name: display_name,
       email: email,
     });
-    console.log("Document written with ID: ", uid);
     return true;
   } catch (e) {
-    console.error("Error adding document: ", e);
     return false;
   }
 };
@@ -31,4 +38,20 @@ export const logUsersCollection = async () => {
   querySnapshot.forEach((doc) => {
     console.log(`${doc.id} => ${doc.data()}`);
   });
+};
+
+export const getCurrentUserDoc = async (): Promise<DocumentData | null> => {
+  const currUser = auth.currentUser;
+  if (!currUser) {
+    return null;
+  }
+  const uid = currUser.uid;
+  const docRef = doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return null;
+  }
 };

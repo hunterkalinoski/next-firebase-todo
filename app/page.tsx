@@ -2,18 +2,17 @@
 
 import { createNewUser, logInUser, logOutUser } from "@lib/auth";
 import HelloWorld from "@components/HelloWorld";
-import { useContext, useState } from "react";
-import { AuthUserContext } from "@lib/authUserContext";
+import { getCurrentUserDoc } from "@lib/database";
+import { useState } from "react";
 
 export default function Home() {
-  const authUser = useContext(AuthUserContext);
+  const [usersName, setUsersName] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   // create both an auth user and a user database entry
   const signUp = async (display_name: string, email: string, password: string) => {
-    console.log(`display_name: ${display_name}, email: ${email}, password: ${password}`);
     await createNewUser(display_name, email, password);
   };
 
@@ -33,7 +32,7 @@ export default function Home() {
       <HelloWorld />
       <HelloWorld />
       <HelloWorld />
-      <label>Username: </label>
+      <label>Display Name: </label>
       <input
         type="text"
         name="display_name"
@@ -55,7 +54,7 @@ export default function Home() {
         className="border border-black"
       />
 
-      <p>{"current user: " + authUser?.email}</p>
+      <p>{"current user: " + usersName}</p>
 
       <button onClick={() => signUp(displayName, email, password)} className="border border-black">
         Sign Up
@@ -65,6 +64,15 @@ export default function Home() {
       </button>
       <button onClick={signOut} className="border border-black">
         Sign Out
+      </button>
+      <button
+        onClick={async () => {
+          const userDoc = await getCurrentUserDoc();
+          setUsersName(userDoc?.display_name);
+        }}
+        className="border border-black"
+      >
+        Get Current User&apos;s display name
       </button>
     </main>
   );
