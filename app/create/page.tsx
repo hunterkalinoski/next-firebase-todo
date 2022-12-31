@@ -51,10 +51,10 @@ export default function Page({}) {
           className="text-sm rounded-lg block w-80 p-2.5"
         >
           <option value="black">Black</option>
-          <option value="white">White</option>
+          {/* <option value="white">White</option>  impossible to see white text */}
           <option value="red">Red</option>
           <option value="orange">Orange</option>
-          <option value="yellow">Yellow</option>
+          {/* <option value="yellow">Yellow</option>  impossible to see white text */}
           <option value="green">Green</option>
           <option value="blue">Blue</option>
           <option value="purple">Purple</option>

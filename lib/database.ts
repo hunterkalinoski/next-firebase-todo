@@ -74,3 +74,21 @@ export const createTodo = async (title: string, description: string, color: stri
     return false;
   }
 };
+
+export const getCurrentUserTodos = async () => {
+  try {
+    const currUser = auth.currentUser;
+    if (!currUser) {
+      return null;
+    }
+    const uid = currUser.uid;
+    const querySnapshot = await getDocs(collection(db, `users/${uid}/todos`));
+    let list: DocumentData[] = [];
+    querySnapshot.forEach((doc) => {
+      list = [...list, doc];
+    });
+    return list;
+  } catch (e) {
+    return null;
+  }
+};
