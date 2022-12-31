@@ -23,6 +23,9 @@ export default function Page() {
         <>
           <div>Hello {userDoc?.display_name}</div>
           <button onClick={logOutUser}>Sign Out</button>
+          <Link href="/create">
+            <button>Create a new Todo</button>
+          </Link>
         </>
       ) : (
         <>

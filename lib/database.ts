@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   DocumentData,
+  addDoc,
 } from "firebase/firestore";
 import firebaseApp from "@lib/firebase";
 import { auth } from "@lib/auth";
@@ -53,5 +54,23 @@ export const getCurrentUserDoc = async (): Promise<DocumentData | null> => {
     return docSnap.data();
   } else {
     return null;
+  }
+};
+
+export const createTodo = async (title: string, description: string, color: string) => {
+  try {
+    const currUser = auth.currentUser;
+    if (!currUser) {
+      return null;
+    }
+    const uid = currUser.uid;
+    const todoDocRef = await addDoc(collection(db, `users/${uid}/todos`), {
+      title,
+      description,
+      color,
+    });
+    return true;
+  } catch (e) {
+    return false;
   }
 };
