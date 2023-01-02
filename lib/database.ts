@@ -7,6 +7,7 @@ import {
   getDoc,
   DocumentData,
   addDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import firebaseApp from "@lib/firebase";
 import { auth } from "@lib/auth";
@@ -68,6 +69,7 @@ export const createTodo = async (title: string, description: string, color: stri
       title,
       description,
       color,
+      timeAdded: serverTimestamp(),
     });
     return true;
   } catch (e) {
@@ -75,6 +77,9 @@ export const createTodo = async (title: string, description: string, color: stri
   }
 };
 
+// returns list of the current user's todos
+// the list is sorted by the timeAdded field,
+// values at an earlier time are first in the list
 export const getCurrentUserTodos = async () => {
   try {
     const currUser = auth.currentUser;
@@ -87,7 +92,8 @@ export const getCurrentUserTodos = async () => {
     querySnapshot.forEach((doc) => {
       list = [...list, doc];
     });
-    return list;
+    const sortedList = list.sort((a, b) => (a.data().timeAdded > b.data().timeAdded ? 1 : -1));
+    return sortedList;
   } catch (e) {
     return null;
   }

@@ -1,3 +1,5 @@
 need a way to delete/mark completed the todos
 
 need a logical way to sort the todos (probably most recent one on top/bottom) - currently they are sorted by internal id (feels random to user)
+
+make app look better
