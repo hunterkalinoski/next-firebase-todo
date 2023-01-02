@@ -8,6 +8,7 @@ import {
   DocumentData,
   addDoc,
   serverTimestamp,
+  deleteDoc,
 } from "firebase/firestore";
 import firebaseApp from "@lib/firebase";
 import { auth } from "@lib/auth";
@@ -71,6 +72,20 @@ export const createTodo = async (title: string, description: string, color: stri
       color,
       timeAdded: serverTimestamp(),
     });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const deleteTodo = async (todoId: string) => {
+  try {
+    const currUser = auth.currentUser;
+    if (!currUser) {
+      return null;
+    }
+    const uid = currUser.uid;
+    await deleteDoc(doc(db, `users/${uid}/todos`, todoId));
     return true;
   } catch (e) {
     return false;
