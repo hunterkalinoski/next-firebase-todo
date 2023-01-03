@@ -80,13 +80,13 @@ export default function Page() {
         <>
           <h1>Welcome to Next-Firebase todos</h1>
           <p>This is a todo app built with Nextjs and Firebase(Auth and Firestore)</p>
-          <span className="flex flex-row gap-2">
-            <Link href="/signup">
-              <button>Sign up</button>
+          <span className="flex flex-row gap-2 items-center">
+            <Link href="/signup" prefetch>
+              <button className="hover:bg-opacity-25 hover:bg-white">Sign up</button>
             </Link>
             <p>or</p>
-            <Link href="/signin">
-              <button>Sign in</button>
+            <Link href="/signin" prefetch>
+              <button className="hover:bg-opacity-25 hover:bg-white">Sign in</button>
             </Link>
             <p>to get started</p>
           </span>
