@@ -66,9 +66,7 @@ export default function Page() {
                     Complete
                   </button>
                 </span>
-                <p style={{ backgroundColor: todo.data().color }}>
-                  {todo.data().description.substring(0, 100) + "..."}
-                </p>
+                <p style={{ backgroundColor: todo.data().color }}>{todo.data().description}</p>
               </li>
             ))}
           </ul>
