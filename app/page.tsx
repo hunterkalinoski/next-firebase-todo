@@ -29,8 +29,8 @@ export default function Page() {
       alert("failed to delete that todo...");
     }
     // update todos (rerender)
-    const data = await getCurrentUserTodos();
-    setTodos(data);
+    let newTodos = todos?.filter((e) => e.id !== todoId);
+    setTodos(newTodos ?? null);
   };
 
   return (
@@ -62,8 +62,7 @@ export default function Page() {
                     {todo.data().title}
                   </h2>
                   <button
-                    className="justify-self-end"
-                    style={{ backgroundColor: todo.data().color }}
+                    className="justify-self-end hover:bg-opacity-40   "
                     onClick={(_) => finishTodo(todo.id)}
                   >
                     Complete
