@@ -9,7 +9,6 @@ import { TailSpin } from "react-loader-spinner";
 
 export default function Page() {
   const [auth] = useAuthState();
-  const [authFetched, setAuthFetched] = useState(0);
   const [userDoc, setUserDoc] = useState<DocumentData | null>(null);
   const [todos, setTodos] = useState<DocumentData[] | null>(null);
 
@@ -20,7 +19,6 @@ export default function Page() {
     getCurrentUserTodos().then((data) => {
       setTodos(data);
     });
-    setAuthFetched(authFetched + 1);
   }, [auth]);
 
   const finishTodo = async (todoId: string) => {
@@ -76,7 +74,7 @@ export default function Page() {
           </ul>
           <p className="pb-10"></p>
         </>
-      ) : authFetched > 2 ? (
+      ) : (
         <>
           <h1>Welcome to Next-Firebase todos</h1>
           <p>This is a todo app built with Nextjs and Firebase(Auth and Firestore)</p>
@@ -90,19 +88,6 @@ export default function Page() {
             </Link>
             <p>to get started</p>
           </span>
-        </>
-      ) : (
-        <>
-          <TailSpin
-            height="80"
-            width="80"
-            color="#334155"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
         </>
       )}
     </>

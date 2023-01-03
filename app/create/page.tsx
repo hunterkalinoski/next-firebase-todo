@@ -12,7 +12,6 @@ export default function Page({}) {
   const [color, setColor] = useState("black");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [authFetched, setAuthFetched] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const finishTodo = async () => {
@@ -31,9 +30,6 @@ export default function Page({}) {
     }
   };
 
-  useEffect(() => {
-    setAuthFetched(authFetched + 1);
-  }, [auth]);
   return (
     <>
       {auth ? (
@@ -89,24 +85,10 @@ export default function Page({}) {
             />
           )}
         </main>
-      ) : // prompt user to sign in if auth is null
-      authFetched ? (
+      ) : (
+        // prompt user to sign in if auth is null
         <main>
           <p>Please sign in before creating a todo!</p>
-        </main>
-      ) : (
-        // show spinner while auth status is unknown
-        <main>
-          <TailSpin
-            height="80"
-            width="80"
-            color="#334155"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
         </main>
       )}
     </>
