@@ -3,11 +3,15 @@
 import { useAuthState } from "@hooks/useAuthState";
 import { logOutUser } from "@lib/auth";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function NavBar({}) {
   const [auth] = useAuthState();
   const [authFetched, setAuthFetched] = useState(0);
+
+  useEffect(() => {
+    setAuthFetched(authFetched + 1);
+  }, [auth]);
 
   return (
     <>
@@ -17,7 +21,7 @@ export default function NavBar({}) {
         </Link>
         {auth ? (
           <button onClick={logOutUser}>Sign Out</button>
-        ) : authFetched ? (
+        ) : authFetched > 2 ? (
           <span className="flex flex-row gap-5">
             <Link href="/signin">
               <button>Sign In</button>
