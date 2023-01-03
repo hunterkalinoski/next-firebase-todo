@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createTodo } from "@lib/database";
 import { useRouter } from "next/navigation";
 import { useAuthState } from "@hooks/useAuthState";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Page({}) {
   const router = useRouter();
@@ -11,23 +12,27 @@ export default function Page({}) {
   const [color, setColor] = useState("black");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [authFetched, setAuthFetched] = useState(false);
+  const [authFetched, setAuthFetched] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const finishTodo = async () => {
+    setLoading(true);
     if (!title) {
       alert("You must enter a title!");
+      setLoading(false);
       return;
     }
     const success = await createTodo(title, description, color);
     if (success) {
       router.push("/");
     } else {
+      setLoading(false);
       alert("failed to submit your todo!");
     }
   };
 
   useEffect(() => {
-    setAuthFetched(true);
+    setAuthFetched(authFetched + 1);
   }, [auth]);
   return (
     <>
@@ -71,6 +76,18 @@ export default function Page({}) {
           </div>
 
           <button onClick={finishTodo}>Finish</button>
+          {loading && (
+            <TailSpin
+              height="80"
+              width="80"
+              color="#334155"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          )}
         </main>
       ) : // prompt user to sign in if auth is null
       authFetched ? (
@@ -78,8 +95,19 @@ export default function Page({}) {
           <p>Please sign in before creating a todo!</p>
         </main>
       ) : (
-        // show empty page while auth status is unknown
-        <main></main>
+        // show spinner while auth status is unknown
+        <main>
+          <TailSpin
+            height="80"
+            width="80"
+            color="#334155"
+            ariaLabel="tail-spin-loading"
+            radius="1"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </main>
       )}
     </>
   );
