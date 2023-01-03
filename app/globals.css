@@ -11,18 +11,26 @@
   }
 
   button {
-    @apply border border-white p-2.5 rounded-lg text-sm;
+    @apply border border-gray-300 p-2.5 rounded-lg text-sm hover:bg-opacity-25 hover:bg-white;
   }
 
   input {
-    @apply border border-white p-2.5 rounded-lg text-sm;
+    @apply border border-gray-300 p-2.5 rounded-lg text-sm bg-slate-700 selection:bg-slate-700;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px rgb(51, 65, 85) inset !important;
+    box-shadow: 0 0 0 30px rgb(51, 65, 85) inset !important;
+    -webkit-text-fill-color: rgb(229, 231, 235) !important;
   }
 
   textarea {
-    @apply border border-white p-2.5 rounded-lg text-sm;
+    @apply border border-gray-300 p-2.5 rounded-lg text-sm;
   }
 
   select {
-    @apply border border-white p-2.5 rounded-lg text-sm;
+    @apply border border-gray-300 p-2.5 rounded-lg text-sm;
   }
 }

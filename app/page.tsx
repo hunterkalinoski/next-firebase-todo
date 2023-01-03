@@ -35,12 +35,11 @@ export default function Page() {
     <>
       {auth ? (
         <>
-          <div>Hello {userDoc?.display_name}</div>
-          <button onClick={logOutUser}>Sign Out</button>
-          <Link className="pb-20" href="/create">
+          <h2>Hello {userDoc?.display_name}</h2>
+          <Link href="/create" prefetch>
             <button>Create a new Todo</button>
           </Link>
-          <h1>Your Todos:</h1>
+          <h1 className="mt-20">Your Todos:</h1>
           <ul className="flex flex-col gap-4">
             {todos?.map((todo) => (
               <li
@@ -82,11 +81,11 @@ export default function Page() {
           <p>This is a todo app built with Nextjs and Firebase(Auth and Firestore)</p>
           <span className="flex flex-row gap-2 items-center">
             <Link href="/signup" prefetch>
-              <button className="hover:bg-opacity-25 hover:bg-white">Sign up</button>
+              <button>Sign up</button>
             </Link>
             <p>or</p>
             <Link href="/signin" prefetch>
-              <button className="hover:bg-opacity-25 hover:bg-white">Sign in</button>
+              <button>Sign in</button>
             </Link>
             <p>to get started</p>
           </span>

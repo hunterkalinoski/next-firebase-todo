@@ -18,10 +18,10 @@ export default function NavBar({}) {
         ) : (
           <span className="flex flex-row gap-5">
             <Link href="/signin" prefetch>
-              <button className="hover:bg-opacity-25 hover:bg-white">Sign In</button>
+              <button>Sign In</button>
             </Link>
             <Link href="/signup" prefetch>
-              <button className="hover:bg-opacity-25 hover:bg-white">Sign Up</button>
+              <button>Sign Up</button>
             </Link>
           </span>
         )}
